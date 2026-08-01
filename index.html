@@ -44,7 +44,7 @@
       z-index: -1;
     }
     a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 40%; }
+    img { display: block; max-width: 100%; }
     button, input, select { font: inherit; }
     :focus-visible {
       outline: 3px solid rgba(26,58,255,0.18);
@@ -254,7 +254,14 @@
       padding: 1rem;
       box-shadow: 0 10px 24px rgba(15,23,42,0.03);
     }
-    .panel strong { display: block; color: var(--text); font-size: 1.1rem; margin-bottom: 0.25rem; }
+    .panel .counter-value {
+      display: block;
+      color: var(--blue);
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.35rem, 2vw, 1.7rem);
+      line-height: 1.1;
+      margin-bottom: 0.25rem;
+    }
     .panel span { color: var(--text-muted); font-size: 0.86rem; }
     .metric-row {
       display: flex;
@@ -383,11 +390,30 @@
       border: 1px solid var(--border);
       box-shadow: 0 12px 30px rgba(15,23,42,0.04);
     }
+    .stat-card .stat-top {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 0.8rem;
+    }
+    .stat-card .stat-icon {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 1.05rem;
+    }
     .stat-card .value {
       font-family: 'Syne', sans-serif;
-      font-size: 1.7rem;
+      font-size: clamp(1.55rem, 2.1vw, 2rem);
+      line-height: 1.1;
       color: var(--blue);
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.35rem;
+      min-height: 2.3rem;
     }
     .stat-card .label { color: var(--text-muted); font-size: 0.92rem; }
 
@@ -521,22 +547,23 @@
   <main>
     <section class="hero">
       <div>
-        <div class="hero-badge"><span class="dot"></span> Coming soon � be first in line</div>
+        <img src="chimsoscreen.png" alt="CHIMSO app screenshot" style="width:100%;">
+        <div class="hero-badge"><span class="dot"></span> Coming soon be first in line</div>
         <h1>Beyond<br><span>meaningful connection</span></h1>
         <p>CHIMSO is a premium, values-first social experience designed for calm growth, thoughtful conversation, and safe community connection.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#waitlist">
-            <span class="ic" aria-hidden="true">?</span>
+            <span class="ic" aria-hidden="true">&rarr;</span>
             Join the waitlist
           </a>
           <a class="btn btn-secondary" href="#features">
             Explore the experience
-            <span class="ic" aria-hidden="true">�</span>
+            <span class="ic" aria-hidden="true">&rarr;</span>
           </a>
         </div>
         <div class="hero-meta">
-          <span class="pill">? Safe and moderated</span>
-          <span class="pill">? Learning-first communities</span>
+          <span class="pill">Safe and moderated</span>
+          <span class="pill">Learning-first communities</span>
         </div>
       </div>
 
@@ -548,12 +575,12 @@
           </div>
           <div class="grid-2">
             <div class="panel">
-              <strong>12K+</strong>
-              <span>Members already exploring</span>
+              <strong class="counter-value" data-target="120" data-suffix="+">0</strong>
+              <span>Community members</span>
             </div>
             <div class="panel">
-              <strong>340</strong>
-              <span>Trusted communities</span>
+              <strong class="counter-value" data-target="8">0</strong>
+              <span>Active communities</span>
             </div>
           </div>
           <div class="metric-row">
@@ -584,14 +611,14 @@
 
     <div class="marquee" aria-label="Highlights">
       <div class="marquee-track">
-        <div class="marquee-item">Meaningful conversations <span class="dot">?</span></div>
-        <div class="marquee-item">Trusted communities <span class="dot">?</span></div>
-        <div class="marquee-item">Purposeful growth <span class="dot">?</span></div>
-        <div class="marquee-item">Faith-inspired spaces <span class="dot">?</span></div>
-        <div class="marquee-item">Meaningful conversations <span class="dot">?</span></div>
-        <div class="marquee-item">Trusted communities <span class="dot">?</span></div>
-        <div class="marquee-item">Purposeful growth <span class="dot">?</span></div>
-        <div class="marquee-item">Faith-inspired spaces <span class="dot">?</span></div>
+        <div class="marquee-item">Meaningful conversations <span class="dot"></span></div>
+        <div class="marquee-item">Trusted communities <span class="dot"></span></div>
+        <div class="marquee-item">Purposeful growth <span class="dot"></span></div>
+        <div class="marquee-item">Faith-inspired spaces <span class="dot"></span></div>
+        <div class="marquee-item">Meaningful conversations <span class="dot"></span></div>
+        <div class="marquee-item">Trusted communities <span class="dot"></span></div>
+        <div class="marquee-item">Purposeful growth <span class="dot"></span></div>
+        <div class="marquee-item">Faith-inspired spaces <span class="dot"></span></div>
       </div>
     </div>
 
@@ -602,27 +629,27 @@
 
       <div class="features-grid">
         <article class="feat-card featured">
-          <div class="feat-icon">?</div>
+          <div class="feat-icon"></div>
           <h3>Peer learning circles</h3>
           <p>Host thoughtful discussions, share insight, and grow alongside people who care about the same values.</p>
         </article>
         <article class="feat-card">
-          <div class="feat-icon">?</div>
+          <div class="feat-icon"></div>
           <h3>Recognized progress</h3>
           <p>Celebrate milestones and contributions in a space that feels encouraging, clear, and motivating.</p>
         </article>
         <article class="feat-card">
-          <div class="feat-icon">?</div>
+          <div class="feat-icon"></div>
           <h3>Safe by design</h3>
           <p>Thoughtful moderation and healthy boundaries make every interaction feel respectful and protected.</p>
         </article>
         <article class="feat-card">
-          <div class="feat-icon">?</div>
+          <div class="feat-icon"></div>
           <h3>Communities that fit</h3>
           <p>Discover spaces around faith, learning, creativity, and technology that feel personal and purposeful.</p>
         </article>
         <article class="feat-card">
-          <div class="feat-icon">?</div>
+          <div class="feat-icon"></div>
           <h3>Mentorship made simple</h3>
           <p>Connect with guides who offer encouragement, perspective, and support in a calm and clear way.</p>
         </article>
@@ -631,19 +658,23 @@
 
     <div class="stats">
       <div class="stat-card">
-        <div class="value">10K+</div>
-        <div class="label">People on the waitlist</div>
+        <div class="stat-top"><div class="stat-icon" aria-hidden="true">👥</div></div>
+        <div class="value" data-target="120" data-suffix="+">0</div>
+        <div class="label">Community members</div>
       </div>
       <div class="stat-card">
-        <div class="value">340+</div>
-        <div class="label">Communities planned</div>
+        <div class="stat-top"><div class="stat-icon" aria-hidden="true">🏘️</div></div>
+        <div class="value" data-target="8">0</div>
+        <div class="label">Active communities</div>
       </div>
       <div class="stat-card">
-        <div class="value">50+</div>
-        <div class="label">Countries represented</div>
+        <div class="stat-top"><div class="stat-icon" aria-hidden="true">📚</div></div>
+        <div class="value" data-target="35" data-suffix="+">0</div>
+        <div class="label">Learning resources</div>
       </div>
       <div class="stat-card">
-        <div class="value">98%</div>
+        <div class="stat-top"><div class="stat-icon" aria-hidden="true">⭐</div></div>
+        <div class="value" data-target="95" data-suffix="%">0</div>
         <div class="label">Positive early feedback</div>
       </div>
     </div>
@@ -712,7 +743,7 @@
             <input id="country" name="country" type="text" placeholder="Nigeria">
           </div>
           <button type="submit" class="btn btn-primary">Claim my early access spot</button>
-          <p class="form-note">No spam, no pressure � just thoughtful updates about CHIMSO.</p>
+          <p class="form-note">No spam, no pressure just thoughtful updates about CHIMSO.</p>
         </form>
 
         <div class="success-msg" id="successMsg" role="status" aria-live="polite">
@@ -732,7 +763,7 @@
       <li><a href="#waitlist">Join</a></li>
       <li><a href="#how">How it works</a></li>
     </ul>
-    <div>� 2025 CHIMSO. All rights reserved.</div>
+    <div> &copy; 2026 CHIMSO. All rights reserved.</div>
   </footer>
 
   <script>
@@ -742,7 +773,7 @@
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       const button = this.querySelector('button[type="submit"]');
-      button.textContent = 'Adding you to the list�';
+      button.textContent = 'Adding you to the list...';
       button.disabled = true;
 
       setTimeout(() => {
@@ -750,6 +781,49 @@
         successMsg.classList.add('visible');
       }, 900);
     });
+
+    const counters = document.querySelectorAll('[data-target]');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const animateCounter = (element) => {
+      const target = Number(element.dataset.target || 0);
+      const suffix = element.dataset.suffix || '';
+      const prefix = element.dataset.prefix || '';
+      const duration = 1200;
+
+      if (prefersReducedMotion) {
+        element.textContent = `${prefix}${target}${suffix}`;
+        return;
+      }
+
+      let startTime = null;
+      const step = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const currentValue = Math.round(target * eased);
+        element.textContent = `${prefix}${currentValue}${suffix}`;
+
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          element.textContent = `${prefix}${target}${suffix}`;
+        }
+      };
+
+      window.requestAnimationFrame(step);
+    };
+
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    counters.forEach((counter) => counterObserver.observe(counter));
   </script>
 </body>
 </html>
