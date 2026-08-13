@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
   <style>
     :root {
       --blue: #1A3AFF;
@@ -371,6 +372,8 @@
       color: var(--blue);
       margin-bottom: 1rem;
     }
+    .feat-icon i { display: inline-flex; align-items: center; justify-content: center; font-size: 22px; line-height: 1; color: var(--blue) !important; }
+    .feat-icon svg { width: 22px; height: 22px; stroke-width: 1.75; color: var(--blue); }
     .feat-card h3 { font-family: 'Syne', sans-serif; font-size: 1.08rem; margin: 0 0 0.55rem; color: var(--text); }
     .feat-card p { color: var(--text-soft); font-size: 0.96rem; margin: 0; }
     .feat-card.featured { grid-column: span 2; background: linear-gradient(135deg, var(--white) 0%, #f7faff 100%); }
@@ -629,27 +632,27 @@
 
       <div class="features-grid">
         <article class="feat-card featured">
-          <div class="feat-icon"></div>
+          <div class="feat-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
           <h3>Peer learning circles</h3>
           <p>Host thoughtful discussions, share insight, and grow alongside people who care about the same values.</p>
         </article>
         <article class="feat-card">
-          <div class="feat-icon"></div>
+          <div class="feat-icon"><i class="fa-solid fa-award" aria-hidden="true"></i></div>
           <h3>Recognized progress</h3>
           <p>Celebrate milestones and contributions in a space that feels encouraging, clear, and motivating.</p>
         </article>
         <article class="feat-card">
-          <div class="feat-icon"></div>
+          <div class="feat-icon"><i class="fa-solid fa-shield-check" aria-hidden="true"></i></div>
           <h3>Safe by design</h3>
           <p>Thoughtful moderation and healthy boundaries make every interaction feel respectful and protected.</p>
         </article>
         <article class="feat-card">
-          <div class="feat-icon"></div>
+          <div class="feat-icon"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></div>
           <h3>Communities that fit</h3>
           <p>Discover spaces around faith, learning, creativity, and technology that feel personal and purposeful.</p>
         </article>
         <article class="feat-card">
-          <div class="feat-icon"></div>
+          <div class="feat-icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></div>
           <h3>Mentorship made simple</h3>
           <p>Connect with guides who offer encouragement, perspective, and support in a calm and clear way.</p>
         </article>
@@ -658,25 +661,25 @@
 
     <div class="stats">
       <div class="stat-card">
-        <div class="stat-top"><div class="stat-icon" aria-hidden="true">👥</div></div>
-        <div class="value" data-target="120" data-suffix="+">0</div>
+        <div class="stat-top"><div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-users" aria-hidden="true"></i></div></div>
+          <div class="value" data-target="120" data-suffix="+">0</div>
         <div class="label">Community members</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-top"><div class="stat-icon" aria-hidden="true">🏘️</div></div>
-        <div class="value" data-target="8">0</div>
-        <div class="label">Active communities</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-top"><div class="stat-icon" aria-hidden="true">📚</div></div>
-        <div class="value" data-target="35" data-suffix="+">0</div>
-        <div class="label">Learning resources</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-top"><div class="stat-icon" aria-hidden="true">⭐</div></div>
-        <div class="value" data-target="95" data-suffix="%">0</div>
-        <div class="label">Positive early feedback</div>
-      </div>
+        <div class="stat-card">
+          <div class="stat-top"><div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></div></div>
+          <div class="value" data-target="8">0</div>
+          <div class="label">Active communities</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-book-open" aria-hidden="true"></i></div></div>
+          <div class="value" data-target="35" data-suffix="+">0</div>
+          <div class="label">Learning resources</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top"><div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-star" aria-hidden="true"></i></div></div>
+          <div class="value" data-target="95" data-suffix="%">0</div>
+          <div class="label">Positive early feedback</div>
+        </div>
     </div>
 
     <section class="how-section" id="how">
@@ -825,5 +828,6 @@
 
     counters.forEach((counter) => counterObserver.observe(counter));
   </script>
+  <!-- Font Awesome used for product-style icons (replaced Lucide usage) -->
 </body>
 </html>
