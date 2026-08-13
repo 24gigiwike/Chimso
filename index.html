@@ -489,6 +489,18 @@
       color: var(--blue-dark);
     }
     .success-msg.visible { display: block; }
+    .error-msg {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.9rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(220, 38, 38, 0.18);
+      background: rgba(254, 242, 242, 1);
+      color: #991b1b;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .error-msg.visible { display: block; }
 
     footer {
       display: flex;
@@ -716,7 +728,7 @@
         <h2 class="section-title">Join the first wave of CHIMSO</h2>
         <p class="section-text">Be part of the launch community and help shape a platform designed to feel trustworthy, inspiring, and beautifully simple.</p>
 
-        <form class="waitlist-form" id="waitlistForm">
+        <form class="waitlist-form" id="waitlistForm" novalidate>
           <div class="form-row">
             <div class="field">
               <label for="firstName">First name</label>
@@ -743,11 +755,13 @@
           </div>
           <div class="field">
             <label for="country">Country</label>
-            <input id="country" name="country" type="text" placeholder="Nigeria">
+            <input id="country" name="country" type="text" placeholder="Nigeria" required>
           </div>
           <button type="submit" class="btn btn-primary">Claim my early access spot</button>
           <p class="form-note">No spam, no pressure just thoughtful updates about CHIMSO.</p>
         </form>
+
+        <div class="error-msg" id="formErrorMsg" role="alert" aria-live="assertive"></div>
 
         <div class="success-msg" id="successMsg" role="status" aria-live="polite">
           <strong>You are on the list.</strong>
@@ -770,19 +784,124 @@
   </footer>
 
   <script>
+    const appScriptUrl = 'https://script.google.com/macros/s/AKfycbwBYi5CAxvn51Jy0foWLkOjzSqYl1aEFUVmy8dog_PAylJnqcNhFBHvBDcsKa06SjzH/exec';
     const form = document.getElementById('waitlistForm');
     const successMsg = document.getElementById('successMsg');
+    const formErrorMsg = document.getElementById('formErrorMsg');
+    const submitButton = form.querySelector('button[type="submit"]');
 
-    form.addEventListener('submit', function (event) {
+    const setLoadingState = (isLoading) => {
+      submitButton.disabled = isLoading;
+      submitButton.textContent = isLoading ? 'Submitting...' : 'Claim my early access spot';
+      form.dataset.submitting = String(isLoading);
+    };
+
+    const hideError = () => {
+      formErrorMsg.textContent = '';
+      formErrorMsg.classList.remove('visible');
+    };
+
+    const showError = (message) => {
+      formErrorMsg.textContent = message;
+      formErrorMsg.classList.add('visible');
+      successMsg.classList.remove('visible');
+    };
+
+    const normalizePayload = (values) => Object.fromEntries(
+      Object.entries(values).map(([key, value]) => [key, String(value).trim()])
+    );
+
+    const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    const validateAndBuildPayload = () => {
+      const fields = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        role: document.getElementById('role').value,
+        country: document.getElementById('country').value
+      };
+
+      const requiredKeys = ['firstName', 'lastName', 'email', 'role', 'country'];
+
+      for (const key of requiredKeys) {
+        if (!fields[key] || !String(fields[key]).trim()) {
+          throw new Error('Please fill in all required fields before submitting.');
+        }
+      }
+
+      if (!isEmailValid(fields.email)) {
+        throw new Error('Please enter a valid email address.');
+      }
+
+      return normalizePayload(fields);
+    };
+
+    const isDuplicateResponse = (payload) => {
+      const message = (payload && (payload.message || payload.error || payload.statusMessage || payload.result || '')) || '';
+      const combined = `${JSON.stringify(payload || {})} ${message}`.toLowerCase();
+      return combined.includes('already') || combined.includes('duplicate') || combined.includes('exists');
+    };
+
+    form.addEventListener('submit', async function (event) {
       event.preventDefault();
-      const button = this.querySelector('button[type="submit"]');
-      button.textContent = 'Adding you to the list...';
-      button.disabled = true;
 
-      setTimeout(() => {
-        this.style.display = 'none';
-        successMsg.classList.add('visible');
-      }, 900);
+      if (form.dataset.submitting === 'true') {
+        return;
+      }
+
+      hideError();
+
+      let payload;
+      try {
+        payload = validateAndBuildPayload();
+      } catch (error) {
+        showError(error.message || 'Please complete all required fields before submitting.');
+        return;
+      }
+
+      setLoadingState(true);
+
+      try {
+        const response = await fetch(appScriptUrl, {
+          method: 'POST',
+          mode: 'cors',
+          cache: 'no-store',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        let result = {};
+        const contentType = response.headers.get('content-type') || '';
+
+        if (contentType.includes('application/json')) {
+          result = await response.json();
+        } else {
+          const textResponse = await response.text();
+          result = { message: textResponse };
+        }
+
+        if (response.ok && !isDuplicateResponse(result)) {
+          form.reset();
+          successMsg.classList.add('visible');
+          form.style.display = 'none';
+          return;
+        }
+
+        if (response.ok && isDuplicateResponse(result)) {
+          showError("You're already on the Chimso waitlist.");
+          return;
+        }
+
+        const apiMessage = result && (result.message || result.error || 'There was a problem submitting your request. Please try again.');
+        throw new Error(apiMessage || 'There was a problem submitting your request. Please try again.');
+      } catch (error) {
+        showError(error.message || 'Something went wrong while submitting your waitlist request. Please try again.');
+      } finally {
+        setLoadingState(false);
+      }
     });
 
     const counters = document.querySelectorAll('[data-target]');
