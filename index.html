@@ -866,38 +866,16 @@
       setLoadingState(true);
 
       try {
-        const response = await fetch(appScriptUrl, {
+        await fetch(appScriptUrl, {
           method: 'POST',
-          mode: 'cors',
+          mode: 'no-cors',
           cache: 'no-store',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: new URLSearchParams(payload)
         });
 
-        let result = {};
-        const contentType = response.headers.get('content-type') || '';
-
-        if (contentType.includes('application/json')) {
-          result = await response.json();
-        } else {
-          const textResponse = await response.text();
-          result = { message: textResponse };
-        }
-
-        if (response.ok && !isDuplicateResponse(result)) {
-          form.reset();
-          successMsg.classList.add('visible');
-          form.style.display = 'none';
-          return;
-        }
-
-        if (response.ok && isDuplicateResponse(result)) {
-          showError("You're already on the Chimso waitlist.");
-          return;
-        }
-
-        const apiMessage = result && (result.message || result.error || 'There was a problem submitting your request. Please try again.');
-        throw new Error(apiMessage || 'There was a problem submitting your request. Please try again.');
+        form.reset();
+        successMsg.classList.add('visible');
+        form.style.display = 'none';
       } catch (error) {
         showError(error.message || 'Something went wrong while submitting your waitlist request. Please try again.');
       } finally {
